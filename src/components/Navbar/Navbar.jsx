@@ -9,7 +9,6 @@ function Navbar() {
   return (
     <nav className={styles.nav}>
       <Link to="/" className={styles.link}>Home</Link>
-
       <Link to="/wishlist" className={styles.link}>
         Wishlist ({wishlist.length})
       </Link>
