@@ -9,17 +9,28 @@ function MovieList() {
     const [movies, setMovies] = useState([])
     const [category, setCategory] = useState("popular")
     const [search, setSearch] = useState("")
+    const [debouncedSearch, setDebouncedSearch] = useState("")
     const [page, setPage] = useState(1)
 
     useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(search)
+        }, 750)
+
+        return () => {
+            clearTimeout(timer)
+        }
+    }, [search])
+
+    useEffect(() => {
         fetchMovies()
-    }, [category, search, page])
+    }, [category, debouncedSearch, page])
 
     const fetchMovies = async () => {
         let url = `${BASE_URL}/movie/${category}?api_key=${API_KEY}&language=fr-FR&page=${page}`
 
-        if (search && search.trim() !== "") {
-            url = `${BASE_URL}/search/movie?api_key=${API_KEY}&language=fr-FR&query=${search}&page=${page}`
+        if (debouncedSearch && debouncedSearch.trim() !== "") {
+            url = `${BASE_URL}/search/movie?api_key=${API_KEY}&language=fr-FR&query=${debouncedSearch}&page=${page}`
         }
 
         const response = await fetch(url)
