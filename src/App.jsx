@@ -3,7 +3,7 @@ import MovieList from './components/MovieList/MovieList'
 import MovieDetail from './components/MovieDetail/MovieDetail'
 import Wishlist from './components/Wishlist/Wishlist'
 import Navbar from './components/Navbar/Navbar'
-import { BrowserRouter, Routes, Route } from 'react-router'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 function App() {
   return (
