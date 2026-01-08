@@ -1,0 +1,11 @@
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 16px;
+}
+
+.link {
+  color: black;
+  text-decoration: none;
+}
