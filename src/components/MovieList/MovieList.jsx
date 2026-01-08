@@ -42,16 +42,15 @@ function MovieList() {
             <input type="text" placeholder="Rechercher un film" value={search} onChange={handleSearch} className={styles.search}/>
             <div className={styles.list}>
                 {movies.map((movie) => (
-                    <div key={movie.id} className={styles.card}>
-                        <h3>{movie.title}</h3>
-                        {movie.poster_path && (
-                            <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title}/>
-                        )}
-                        <p>{movie.vote_average}⭐</p>
-                        <Link to={`/movie/${movie.id}`}>
-                            <button>Voir les détails</button>
-                        </Link>
-                    </div>
+                    <Link to={`/movie/${movie.id}`}>
+                        <div key={movie.id} className={styles.card}>
+                            <h3>{movie.title}</h3>
+                            {movie.poster_path && (
+                                <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title}/>
+                            )}
+                            <p>{movie.vote_average}⭐</p>
+                        </div>
+                    </Link>
                 ))}
             </div>
         </div>

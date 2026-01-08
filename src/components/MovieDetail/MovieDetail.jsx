@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import styles from "./MovieDetail.module.css"
 import { WishlistContext } from "../../context/WishlistProvider"
 
@@ -11,12 +11,14 @@ function MovieDetail() {
 
     const [movie, setMovie] = useState(null)
     const [actors, setActors] = useState([])
+    const [similarMovies, setSimilarMovies] = useState([])
 
     const { wishlist, addToWishlist, removeFromWishlist } = useContext(WishlistContext)
 
     useEffect(() => {
         fetchMovie()
         fetchActorsFromMovieId()
+        fetchSimilarMovies()
     }, [id])
 
     const fetchMovie = async () => {
@@ -30,9 +32,23 @@ function MovieDetail() {
         const data = await response.json()
         if (data.cast) {
             setActors(data.cast.slice(0, 10))
-        }
+        } 
         else {
             setActors([])
+        }
+    }
+
+    const fetchSimilarMovies = async () => {
+        const response = await fetch(
+            `${BASE_URL}/movie/${id}/similar?api_key=${API_KEY}&language=fr-FR`
+        )
+        const data = await response.json()
+
+        if (data.results) {
+            setSimilarMovies(data.results)
+        } 
+        else {
+            setSimilarMovies([])
         }
     }
 
@@ -54,7 +70,7 @@ function MovieDetail() {
             {isInWishlist ?
                 (
                     <button onClick={() => removeFromWishlist(movie)}> Retirer de la wishlist </button>
-                ) : (
+            ) : (
                     <button onClick={() => addToWishlist(movie)}> Ajouter à la wishlist </button>
                 )
             }
@@ -64,6 +80,24 @@ function MovieDetail() {
                     <p key={actor.id}>
                         L'{actor.gender === 1 ? "actrice" : actor.gender === 2 ? "acteur" : ""} {actor.name} joue le personnage de {actor.character}
                     </p>
+                ))}
+            </div>
+
+            <h2>Films similaires</h2>
+            <div className={styles.similar}>
+                {similarMovies.map((similar) => (
+                    <Link to={`/movie/${similar.id}`}>
+                        <div key={similar.id} className={styles.similarCard}>
+                            <h4>{similar.title}</h4>
+
+                            {similar.poster_path && (
+                                <img
+                                    src={`https://image.tmdb.org/t/p/w200${similar.poster_path}`}
+                                    alt={similar.title}
+                                />
+                            )}
+                        </div>
+                    </Link>
                 ))}
             </div>
         </div>
