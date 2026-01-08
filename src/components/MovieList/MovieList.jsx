@@ -47,7 +47,7 @@ function MovieList() {
                         {movie.poster_path && (
                             <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title}/>
                         )}
-                        <p>⭐ {movie.vote_average}</p>
+                        <p>{movie.vote_average}⭐</p>
                         <Link to={`/movie/${movie.id}`}>
                             <button>Voir les détails</button>
                         </Link>
