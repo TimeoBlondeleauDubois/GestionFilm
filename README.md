@@ -1,7 +1,7 @@
 # Configurer le projet
 
 Pour lancer le projet suivez les commandes suivantes:
-- Cloner le projet: "https://github.com/TimeoBlondeleauDubois/GestionFilm.git"
+- Cloner le projet: "git clone https://github.com/TimeoBlondeleauDubois/GestionFilm.git"
 - Rentrer dans le dossier racine: "cd GestionFilm"
 - Récupérer les packages: "npm install"
 
