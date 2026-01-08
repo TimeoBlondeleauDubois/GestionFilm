@@ -86,8 +86,8 @@ function MovieDetail() {
             <h2>Films similaires</h2>
             <div className={styles.similar}>
                 {similarMovies.map((similar) => (
-                    <Link to={`/movie/${similar.id}`}>
-                        <div key={similar.id} className={styles.similarCard}>
+                    <Link key={similar.id} to={`/movie/${similar.id}`}>
+                        <div className={styles.similarCard}>
                             <h4>{similar.title}</h4>
 
                             {similar.poster_path && (
