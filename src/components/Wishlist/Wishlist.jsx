@@ -46,7 +46,7 @@ function Wishlist() {
                             {movie.poster_path && (
                                 <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title}/>
                             )}
-                            <p>{movie.vote_average}⭐</p>
+                            <p>{movie.vote_average.toFixed(1)}⭐</p>
                             <button onClick={() => removeFromWishlist(movie)}> Supprimer </button>
                         </div>
                     </Link>

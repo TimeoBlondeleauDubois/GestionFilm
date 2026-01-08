@@ -13,20 +13,6 @@
     margin-bottom: 20px;
 }
 
-button {
-    background-color: #2a2a2a;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-button:hover {
-    background-color: #3a3a3a;
-}
-
 .search {
     display: block;
     margin: 0 auto 25px auto;
@@ -71,26 +57,25 @@ button:hover {
     transform: scale(1.05);
 }
 
-h1 {
+.container h1 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-h3 {
+.container h3 {
     font-size: 15px;
     margin: 8px 0;
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-p {
+.container p {
     margin-top: auto;
     font-weight: bold;
 }
 
-img {
+.container img {
     width: 100%;
     height: 270px;
     object-fit: cover;
@@ -116,11 +101,11 @@ img {
     cursor: pointer;
 }
 
-button:disabled {
+.container button:disabled {
     opacity: 0.4;
     cursor: not-allowed;
 }
 
-span {
+.container span {
     font-weight: bold;
 }
