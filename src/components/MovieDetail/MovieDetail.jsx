@@ -45,30 +45,27 @@ function MovieDetail() {
     return (
         <div className={styles.container}>
             <h1>{movie.title}</h1>
-
             {movie.poster_path && (
                 <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt={movie.title} />
             )}
-
             <p>Résumé du film: {movie.overview}</p>
             <p>Le film est sortie le: {movie.release_date}</p>
             <p>Note moyenne du film: {movie.vote_average}⭐</p>
-
             {isInWishlist ?
                 (
                     <button onClick={() => removeFromWishlist(movie)}> Retirer de la wishlist </button>
                 ) : (
                     <button onClick={() => addToWishlist(movie)}> Ajouter à la wishlist </button>
-                )}
-
+                )
+            }
             <h2>Acteurs principaux</h2>
-            <p className={styles.actors}>
+            <div className={styles.actors}>
                 {actors.map((actor) => (
                     <p key={actor.id}>
                         L'{actor.gender === 1 ? "actrice" : actor.gender === 2 ? "acteur" : ""} {actor.name} joue le personnage de {actor.character}
                     </p>
                 ))}
-            </p>
+            </div>
         </div>
     )
 }
