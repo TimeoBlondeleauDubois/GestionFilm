@@ -52,21 +52,21 @@ function MovieList() {
         <div className={styles.container}>
             <h1>Liste de films</h1>
             <div className={styles.categories}>
-                <button onClick={() => changeCategory("now_playing")}>Now Playing</button>
-                <button onClick={() => changeCategory("popular")}>Popular</button>
-                <button onClick={() => changeCategory("top_rated")}>Top Rated</button>
-                <button onClick={() => changeCategory("upcoming")}>Upcoming</button>
+                <button onClick={() => changeCategory("now_playing")}>En salle</button>
+                <button onClick={() => changeCategory("popular")}>Les plus populaires</button>
+                <button onClick={() => changeCategory("top_rated")}>Les mieux notés</button>
+                <button onClick={() => changeCategory("upcoming")}>À venir</button>
             </div>
-            <input type="text" placeholder="Rechercher un film" value={search} onChange={handleSearch} className={styles.search}/>
+            <input type="text" placeholder="Rechercher un film" value={search} onChange={handleSearch} className={styles.search} />
             <div className={styles.list}>
                 {movies.map((movie) => (
                     <Link key={movie.id} to={`/movie/${movie.id}`}>
                         <div className={styles.card}>
                             <h3>{movie.title}</h3>
                             {movie.poster_path && (
-                                <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title}/>
+                                <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} />
                             )}
-                            <p>{movie.vote_average}⭐</p>
+                            <p>{movie.vote_average.toFixed(1)}⭐</p>
                         </div>
                     </Link>
                 ))}

@@ -40,17 +40,16 @@ function Wishlist() {
                     <p>Aucun film dans la wishlist</p>
                 )}
                 {filteredMovies.map((movie) => (
-                    <div key={movie.id} className={styles.card}>
-                        <h2>{movie.title}</h2>
-                        {movie.poster_path && (
-                            <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title}/>
-                        )}
-                        <p>{movie.vote_average}⭐</p>
-                        <Link to={`/movie/${movie.id}`}>
-                            <button>Voir les détails</button>
-                        </Link>
-                        <button onClick={() => removeFromWishlist(movie)}> Supprimer </button>
-                    </div>
+                    <Link to={`/movie/${movie.id}`}>
+                        <div key={movie.id} className={styles.card}>
+                            <h2>{movie.title}</h2>
+                            {movie.poster_path && (
+                                <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title}/>
+                            )}
+                            <p>{movie.vote_average}⭐</p>
+                            <button onClick={() => removeFromWishlist(movie)}> Supprimer </button>
+                        </div>
+                    </Link>
                 ))}
             </div>
         </div>
