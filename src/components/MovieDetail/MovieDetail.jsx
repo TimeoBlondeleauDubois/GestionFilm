@@ -12,6 +12,7 @@ function MovieDetail() {
     const [movie, setMovie] = useState(null)
     const [actors, setActors] = useState([])
     const [similarMovies, setSimilarMovies] = useState([])
+    const [trailerKey, setTrailerKey] = useState(null)
 
     const { wishlist, addToWishlist, removeFromWishlist } = useContext(WishlistContext)
 
@@ -19,6 +20,7 @@ function MovieDetail() {
         fetchMovie()
         fetchActorsFromMovieId()
         fetchSimilarMovies()
+        fetchTrailer()
     }, [id])
 
     const fetchMovie = async () => {
@@ -52,6 +54,20 @@ function MovieDetail() {
         }
     }
 
+    const fetchTrailer = async () => {
+        const response = await fetch(`${BASE_URL}/movie/${id}/videos?api_key=${API_KEY}&language=fr-FR`)
+        const data = await response.json()
+
+        if (data.results !== undefined) {
+            for (let i = 0; i < data.results.length; i++) {
+                if (data.results[i].site === "YouTube" && data.results[i].type === "Trailer") {
+                    setTrailerKey(data.results[i].key)
+                    break
+                }
+            }
+        }
+    }
+
     if (movie === null) {
         return <div>Loading...</div>
     }
@@ -70,10 +86,16 @@ function MovieDetail() {
             {isInWishlist ?
                 (
                     <button onClick={() => removeFromWishlist(movie)}> Retirer de la wishlist </button>
-            ) : (
+                ) : (
                     <button onClick={() => addToWishlist(movie)}> Ajouter à la wishlist </button>
                 )
             }
+            {trailerKey && (
+                <div>
+                    <h2>Bande-annonce</h2>
+                    <iframe src={`https://www.youtube.com/embed/${trailerKey}`} title="Bande-annonce" allowFullScreen></iframe>
+                </div>
+            )}
             <h2>Acteurs principaux</h2>
             <div className={styles.actors}>
                 {actors.map((actor) => (
