@@ -1,16 +1,15 @@
 import './App.css'
 import MovieList from './components/MovieList/MovieList'
-import { BrowserRouter, Routes, Route, Link } from 'react-router'
 import MovieDetail from './components/MovieDetail/MovieDetail'
 import Wishlist from './components/Wishlist/Wishlist'
+import Navbar from './components/Navbar/Navbar'
+import { BrowserRouter, Routes, Route } from 'react-router'
 
 function App() {
   return (
     <BrowserRouter>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/wishlist">Wishlist</Link>
-      </nav>
+      <Navbar />
+
       <Routes>
         <Route path="/" element={<MovieList />} />
         <Route path="/movie/:id" element={<MovieDetail />} />
