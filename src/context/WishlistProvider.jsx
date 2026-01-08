@@ -1,9 +1,20 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 
 export const WishlistContext = createContext(undefined)
 
 export function WishlistProvider({ children }) {
     const [wishlist, setWishlist] = useState([])
+    const savedWishlist = localStorage.getItem("wishlist")
+
+    useEffect(() => {
+        if (savedWishlist !== null) {
+            setWishlist(JSON.parse(savedWishlist))
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem("wishlist", JSON.stringify(wishlist))
+    }, [wishlist])
 
     const addToWishlist = (movie) => {
         let exists = false
