@@ -17,6 +17,7 @@ function MovieDetail() {
     const { wishlist, addToWishlist, removeFromWishlist } = useContext(WishlistContext)
 
     useEffect(() => {
+        setTrailerKey(null)
         fetchMovie()
         fetchActorsFromMovieId()
         fetchSimilarMovies()
