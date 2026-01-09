@@ -75,12 +75,12 @@ function MovieDetail() {
     const isInWishlist = wishlist.some((item) => item.id === movie.id)
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} style={{ backgroundImage: movie.backdrop_path ? `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})` : "none"}}>
             <h1>{movie.title}</h1>
             {movie.poster_path && (
                 <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt={movie.title} />
             )}
-            <p>Résumé du film: {movie.overview}</p>
+            <p>{movie.overview}</p>
             <p>Le film est sortie le: {movie.release_date}</p>
             <p>Note moyenne du film: {movie.vote_average}⭐</p>
             {isInWishlist ?
