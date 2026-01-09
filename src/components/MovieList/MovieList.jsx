@@ -9,16 +9,28 @@ function MovieList() {
     const [movies, setMovies] = useState([])
     const [category, setCategory] = useState("popular")
     const [search, setSearch] = useState("")
+    const [debouncedSearch, setDebouncedSearch] = useState("")
+    const [page, setPage] = useState(1)
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(search)
+        }, 750)
+
+        return () => {
+            clearTimeout(timer)
+        }
+    }, [search])
 
     useEffect(() => {
         fetchMovies()
-    }, [category, search])
+    }, [category, debouncedSearch, page])
 
     const fetchMovies = async () => {
-        let url = `${BASE_URL}/movie/${category}?api_key=${API_KEY}&language=fr-FR`
+        let url = `${BASE_URL}/movie/${category}?api_key=${API_KEY}&language=fr-FR&page=${page}`
 
-        if (search && search.trim() !== "") {
-            url = `${BASE_URL}/search/movie?api_key=${API_KEY}&language=fr-FR&query=${search}`
+        if (debouncedSearch && debouncedSearch.trim() !== "") {
+            url = `${BASE_URL}/search/movie?api_key=${API_KEY}&language=fr-FR&query=${debouncedSearch}&page=${page}`
         }
 
         const response = await fetch(url)
@@ -28,31 +40,41 @@ function MovieList() {
 
     const handleSearch = (e) => {
         setSearch(e.target.value)
+        setPage(1)
+    }
+
+    const changeCategory = (newCategory) => {
+        setCategory(newCategory)
+        setPage(1)
     }
 
     return (
         <div className={styles.container}>
             <h1>Liste de films</h1>
             <div className={styles.categories}>
-                <button onClick={() => setCategory("now_playing")}>Now Playing</button>
-                <button onClick={() => setCategory("popular")}>Popular</button>
-                <button onClick={() => setCategory("top_rated")}>Top Rated</button>
-                <button onClick={() => setCategory("upcoming")}>Upcoming</button>
+                <button onClick={() => changeCategory("now_playing")}>En salle</button>
+                <button onClick={() => changeCategory("popular")}>Les plus populaires</button>
+                <button onClick={() => changeCategory("top_rated")}>Les mieux notés</button>
+                <button onClick={() => changeCategory("upcoming")}>À venir</button>
             </div>
-            <input type="text" placeholder="Rechercher un film" value={search} onChange={handleSearch} className={styles.search}/>
+            <input type="text" placeholder="Rechercher un film" value={search} onChange={handleSearch} className={styles.search} />
             <div className={styles.list}>
                 {movies.map((movie) => (
-                    <div key={movie.id} className={styles.card}>
-                        <h3>{movie.title}</h3>
-                        {movie.poster_path && (
-                            <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title}/>
-                        )}
-                        <p>{movie.vote_average}⭐</p>
-                        <Link to={`/movie/${movie.id}`}>
-                            <button>Voir les détails</button>
-                        </Link>
-                    </div>
+                    <Link key={movie.id} to={`/movie/${movie.id}`}>
+                        <div className={styles.card}>
+                            <h3>{movie.title}</h3>
+                            {movie.poster_path && (
+                                <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} />
+                            )}
+                            <p>{movie.vote_average.toFixed(1)}⭐</p>
+                        </div>
+                    </Link>
                 ))}
+            </div>
+            <div className={styles.pagination}>
+                <button onClick={() => setPage(page - 1)} disabled={page === 1} > Précédent </button>
+                <span>Page {page} </span>
+                <button onClick={() => setPage(page + 1)}> Suivant </button>
             </div>
         </div>
     )
