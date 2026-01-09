@@ -93,9 +93,11 @@
 }
 
 .actors {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    display: flex;
+    align-items: center;
     gap: 12px;
+    overflow-x: auto;
+    padding: 10px 0;
 }
 
 .actors p {
@@ -103,7 +105,19 @@
     padding: 10px 14px;
     border-radius: 8px;
     font-size: 14px;
+    text-align: center;
     color: #eee;
+}
+
+.actorImage {
+    width: 120px;
+    border-radius: 8px;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+}
+
+.actorImage:hover {
+    transform: scale(1.05);
 }
 
 .similar {

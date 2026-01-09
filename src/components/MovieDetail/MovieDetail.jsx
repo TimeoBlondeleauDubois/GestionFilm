@@ -101,6 +101,7 @@ function MovieDetail() {
             <div className={styles.actors}>
                 {actors.map((actor) => (
                     <p key={actor.id}>
+                        <img key={actor.id} src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`} alt={actor.name} className={styles.actorImage}/>
                         L'{actor.gender === 1 ? "actrice" : actor.gender === 2 ? "acteur" : ""} {actor.name} joue le personnage de {actor.character}
                     </p>
                 ))}
